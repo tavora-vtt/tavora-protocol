@@ -16,6 +16,8 @@ message Frame {
     Ephemeral ephemeral = 15;
     Error error = 16;
     Ping ping = 17;
+    Pong pong = 18;
+    Resync resync = 19;
   }
 }
 
@@ -75,6 +77,15 @@ message Error {
 
 message Ping {
   int64 sent_at_unix_ms = 1;
+}
+
+message Pong {
+  int64 sent_at_unix_ms = 1;
+}
+
+message Resync {
+  string reason = 1;
+  int64 from_seq = 2;
 }
 
 message Pong {

@@ -18,6 +18,17 @@ jobs:
           go-version-file: go.mod
           cache: true
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
       - uses: bufbuild/buf-action@v1
         with:
           setup_only: true
@@ -34,11 +45,13 @@ jobs:
         run: buf breaking --against "https://github.com/${{ github.repository }}.git#branch=main"
 
       - run: go build ./...
+      - run: pnpm run build
 
       - name: Generated code is current
         run: |
           buf generate
-          git diff --exit-code -- gen || {
-            echo "generated code is stale, run 'buf generate' and commit the result"
+          pnpm run build
+          git diff --exit-code -- gen dist || {
+            echo "generated code is stale, run 'buf generate && pnpm run build' and commit the result"
             exit 1
           }

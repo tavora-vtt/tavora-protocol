@@ -12,19 +12,33 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: bufbuild/buf-action@v1
-        with:
-          setup_only: true
-      - run: buf lint
-      - name: Breaking change check against main
-        if: github.event_name == 'pull_request'
-        run: buf breaking --against "https://github.com/${{ github.repository }}.git#branch=main"
+
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
           cache: true
+
+      - uses: bufbuild/buf-action@v1
+        with:
+          setup_only: true
+
+      - name: Install pinned code generators
+        run: |
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          go build -o "$(go env GOPATH)/bin/protoc-gen-go" google.golang.org/protobuf/cmd/protoc-gen-go
+
+      - run: buf lint
+
+      - name: Breaking change check against main
+        if: github.event_name == 'pull_request'
+        run: buf breaking --against "https://github.com/${{ github.repository }}.git#branch=main"
+
       - run: go build ./...
+
       - name: Generated code is current
         run: |
           buf generate
-          git diff --exit-code -- gen || (echo "run 'buf generate' and commit the result" && exit 1)
+          git diff --exit-code -- gen || {
+            echo "generated code is stale, run 'buf generate' and commit the result"
+            exit 1
+          }

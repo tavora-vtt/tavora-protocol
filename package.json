@@ -1,0 +1,12 @@
+{
+  "name": "@tavora/protocol",
+  "version": "0.0.0",
+  "description": "Generated TypeScript bindings for the Tavora wire protocol",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check": "echo 'TypeScript generation lands with M0'",
+    "build": "echo 'TypeScript generation lands with M0'"
+  }
+}

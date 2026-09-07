@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package tavora.v1;
+
+option go_package = "github.com/tavora-vtt/tavora-protocol/gen/go/tavora/v1;tavorav1";
+
+message RtcJoin {
+  string room = 1;
+  bool publish_audio = 2;
+  bool publish_video = 3;
+}
+
+message RtcSignal {
+  string sdp_type = 1;
+  string sdp = 2;
+  repeated string ice_candidates = 3;
+}
+
+message RtcPublish {
+  string track_kind = 1;
+  bool enabled = 2;
+}
+
+message RtcSubscribe {
+  repeated string participant_ids = 1;
+}
+
+message RtcControl {
+  string action = 1;
+  string participant_id = 2;
+  string room = 3;
+}
+
+message RtcGain {
+  string speaker_id = 1;
+  float gain = 2;
+}
+
+message RtcGainMatrix {
+  string scene_id = 1;
+  repeated RtcGain gains = 2;
+}

@@ -767,6 +767,102 @@ func (x *Ping) GetSentAtUnixMs() int64 {
 	return 0
 }
 
+type Pong struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SentAtUnixMs  int64                  `protobuf:"varint,1,opt,name=sent_at_unix_ms,json=sentAtUnixMs,proto3" json:"sent_at_unix_ms,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Pong) Reset() {
+	*x = Pong{}
+	mi := &file_tavora_v1_frame_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Pong) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Pong) ProtoMessage() {}
+
+func (x *Pong) ProtoReflect() protoreflect.Message {
+	mi := &file_tavora_v1_frame_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Pong.ProtoReflect.Descriptor instead.
+func (*Pong) Descriptor() ([]byte, []int) {
+	return file_tavora_v1_frame_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Pong) GetSentAtUnixMs() int64 {
+	if x != nil {
+		return x.SentAtUnixMs
+	}
+	return 0
+}
+
+type Resync struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reason        string                 `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
+	FromSeq       int64                  `protobuf:"varint,2,opt,name=from_seq,json=fromSeq,proto3" json:"from_seq,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Resync) Reset() {
+	*x = Resync{}
+	mi := &file_tavora_v1_frame_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Resync) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Resync) ProtoMessage() {}
+
+func (x *Resync) ProtoReflect() protoreflect.Message {
+	mi := &file_tavora_v1_frame_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Resync.ProtoReflect.Descriptor instead.
+func (*Resync) Descriptor() ([]byte, []int) {
+	return file_tavora_v1_frame_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *Resync) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *Resync) GetFromSeq() int64 {
+	if x != nil {
+		return x.FromSeq
+	}
+	return 0
+}
+
 var File_tavora_v1_frame_proto protoreflect.FileDescriptor
 
 const file_tavora_v1_frame_proto_rawDesc = "" +
@@ -834,7 +930,12 @@ const file_tavora_v1_frame_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"-\n" +
 	"\x04Ping\x12%\n" +
-	"\x0fsent_at_unix_ms\x18\x01 \x01(\x03R\fsentAtUnixMsBAZ?github.com/tavora-vtt/tavora-protocol/gen/go/tavora/v1;tavorav1b\x06proto3"
+	"\x0fsent_at_unix_ms\x18\x01 \x01(\x03R\fsentAtUnixMs\"-\n" +
+	"\x04Pong\x12%\n" +
+	"\x0fsent_at_unix_ms\x18\x01 \x01(\x03R\fsentAtUnixMs\";\n" +
+	"\x06Resync\x12\x16\n" +
+	"\x06reason\x18\x01 \x01(\tR\x06reason\x12\x19\n" +
+	"\bfrom_seq\x18\x02 \x01(\x03R\afromSeqBAZ?github.com/tavora-vtt/tavora-protocol/gen/go/tavora/v1;tavorav1b\x06proto3"
 
 var (
 	file_tavora_v1_frame_proto_rawDescOnce sync.Once
@@ -848,7 +949,7 @@ func file_tavora_v1_frame_proto_rawDescGZIP() []byte {
 	return file_tavora_v1_frame_proto_rawDescData
 }
 
-var file_tavora_v1_frame_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_tavora_v1_frame_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_tavora_v1_frame_proto_goTypes = []any{
 	(*Frame)(nil),     // 0: tavora.v1.Frame
 	(*Hello)(nil),     // 1: tavora.v1.Hello
@@ -859,23 +960,25 @@ var file_tavora_v1_frame_proto_goTypes = []any{
 	(*Ephemeral)(nil), // 6: tavora.v1.Ephemeral
 	(*Error)(nil),     // 7: tavora.v1.Error
 	(*Ping)(nil),      // 8: tavora.v1.Ping
-	nil,               // 9: tavora.v1.Error.ParamsEntry
+	(*Pong)(nil),      // 9: tavora.v1.Pong
+	(*Resync)(nil),    // 10: tavora.v1.Resync
+	nil,               // 11: tavora.v1.Error.ParamsEntry
 }
 var file_tavora_v1_frame_proto_depIdxs = []int32{
-	1, // 0: tavora.v1.Frame.hello:type_name -> tavora.v1.Hello
-	2, // 1: tavora.v1.Frame.welcome:type_name -> tavora.v1.Welcome
-	3, // 2: tavora.v1.Frame.intent:type_name -> tavora.v1.Intent
-	4, // 3: tavora.v1.Frame.ack:type_name -> tavora.v1.Ack
-	5, // 4: tavora.v1.Frame.event:type_name -> tavora.v1.Event
-	6, // 5: tavora.v1.Frame.ephemeral:type_name -> tavora.v1.Ephemeral
-	7, // 6: tavora.v1.Frame.error:type_name -> tavora.v1.Error
-	8, // 7: tavora.v1.Frame.ping:type_name -> tavora.v1.Ping
-	9, // 8: tavora.v1.Error.params:type_name -> tavora.v1.Error.ParamsEntry
-	9, // [9:9] is the sub-list for method output_type
-	9, // [9:9] is the sub-list for method input_type
-	9, // [9:9] is the sub-list for extension type_name
-	9, // [9:9] is the sub-list for extension extendee
-	0, // [0:9] is the sub-list for field type_name
+	1,  // 0: tavora.v1.Frame.hello:type_name -> tavora.v1.Hello
+	2,  // 1: tavora.v1.Frame.welcome:type_name -> tavora.v1.Welcome
+	3,  // 2: tavora.v1.Frame.intent:type_name -> tavora.v1.Intent
+	4,  // 3: tavora.v1.Frame.ack:type_name -> tavora.v1.Ack
+	5,  // 4: tavora.v1.Frame.event:type_name -> tavora.v1.Event
+	6,  // 5: tavora.v1.Frame.ephemeral:type_name -> tavora.v1.Ephemeral
+	7,  // 6: tavora.v1.Frame.error:type_name -> tavora.v1.Error
+	8,  // 7: tavora.v1.Frame.ping:type_name -> tavora.v1.Ping
+	11, // 8: tavora.v1.Error.params:type_name -> tavora.v1.Error.ParamsEntry
+	9,  // [9:9] is the sub-list for method output_type
+	9,  // [9:9] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_tavora_v1_frame_proto_init() }
@@ -899,7 +1002,7 @@ func file_tavora_v1_frame_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_tavora_v1_frame_proto_rawDesc), len(file_tavora_v1_frame_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

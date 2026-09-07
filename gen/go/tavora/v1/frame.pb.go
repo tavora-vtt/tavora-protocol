@@ -34,6 +34,8 @@ type Frame struct {
 	//	*Frame_Ephemeral
 	//	*Frame_Error
 	//	*Frame_Ping
+	//	*Frame_Pong
+	//	*Frame_Resync
 	Body          isFrame_Body `protobuf_oneof:"body"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -155,6 +157,24 @@ func (x *Frame) GetPing() *Ping {
 	return nil
 }
 
+func (x *Frame) GetPong() *Pong {
+	if x != nil {
+		if x, ok := x.Body.(*Frame_Pong); ok {
+			return x.Pong
+		}
+	}
+	return nil
+}
+
+func (x *Frame) GetResync() *Resync {
+	if x != nil {
+		if x, ok := x.Body.(*Frame_Resync); ok {
+			return x.Resync
+		}
+	}
+	return nil
+}
+
 type isFrame_Body interface {
 	isFrame_Body()
 }
@@ -191,6 +211,14 @@ type Frame_Ping struct {
 	Ping *Ping `protobuf:"bytes,17,opt,name=ping,proto3,oneof"`
 }
 
+type Frame_Pong struct {
+	Pong *Pong `protobuf:"bytes,18,opt,name=pong,proto3,oneof"`
+}
+
+type Frame_Resync struct {
+	Resync *Resync `protobuf:"bytes,19,opt,name=resync,proto3,oneof"`
+}
+
 func (*Frame_Hello) isFrame_Body() {}
 
 func (*Frame_Welcome) isFrame_Body() {}
@@ -206,6 +234,10 @@ func (*Frame_Ephemeral) isFrame_Body() {}
 func (*Frame_Error) isFrame_Body() {}
 
 func (*Frame_Ping) isFrame_Body() {}
+
+func (*Frame_Pong) isFrame_Body() {}
+
+func (*Frame_Resync) isFrame_Body() {}
 
 type Hello struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
@@ -867,7 +899,7 @@ var File_tavora_v1_frame_proto protoreflect.FileDescriptor
 
 const file_tavora_v1_frame_proto_rawDesc = "" +
 	"\n" +
-	"\x15tavora/v1/frame.proto\x12\ttavora.v1\"\xff\x02\n" +
+	"\x15tavora/v1/frame.proto\x12\ttavora.v1\"\xd3\x03\n" +
 	"\x05Frame\x12\x12\n" +
 	"\x04lane\x18\x01 \x01(\rR\x04lane\x12(\n" +
 	"\x05hello\x18\n" +
@@ -878,7 +910,9 @@ const file_tavora_v1_frame_proto_rawDesc = "" +
 	"\x05event\x18\x0e \x01(\v2\x10.tavora.v1.EventH\x00R\x05event\x124\n" +
 	"\tephemeral\x18\x0f \x01(\v2\x14.tavora.v1.EphemeralH\x00R\tephemeral\x12(\n" +
 	"\x05error\x18\x10 \x01(\v2\x10.tavora.v1.ErrorH\x00R\x05error\x12%\n" +
-	"\x04ping\x18\x11 \x01(\v2\x0f.tavora.v1.PingH\x00R\x04pingB\x06\n" +
+	"\x04ping\x18\x11 \x01(\v2\x0f.tavora.v1.PingH\x00R\x04ping\x12%\n" +
+	"\x04pong\x18\x12 \x01(\v2\x0f.tavora.v1.PongH\x00R\x04pong\x12+\n" +
+	"\x06resync\x18\x13 \x01(\v2\x11.tavora.v1.ResyncH\x00R\x06resyncB\x06\n" +
 	"\x04body\"\xbc\x01\n" +
 	"\x05Hello\x12\x16\n" +
 	"\x06ticket\x18\x01 \x01(\tR\x06ticket\x12\x19\n" +
@@ -973,12 +1007,14 @@ var file_tavora_v1_frame_proto_depIdxs = []int32{
 	6,  // 5: tavora.v1.Frame.ephemeral:type_name -> tavora.v1.Ephemeral
 	7,  // 6: tavora.v1.Frame.error:type_name -> tavora.v1.Error
 	8,  // 7: tavora.v1.Frame.ping:type_name -> tavora.v1.Ping
-	11, // 8: tavora.v1.Error.params:type_name -> tavora.v1.Error.ParamsEntry
-	9,  // [9:9] is the sub-list for method output_type
-	9,  // [9:9] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	9,  // 8: tavora.v1.Frame.pong:type_name -> tavora.v1.Pong
+	10, // 9: tavora.v1.Frame.resync:type_name -> tavora.v1.Resync
+	11, // 10: tavora.v1.Error.params:type_name -> tavora.v1.Error.ParamsEntry
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_tavora_v1_frame_proto_init() }
@@ -995,6 +1031,8 @@ func file_tavora_v1_frame_proto_init() {
 		(*Frame_Ephemeral)(nil),
 		(*Frame_Error)(nil),
 		(*Frame_Ping)(nil),
+		(*Frame_Pong)(nil),
+		(*Frame_Resync)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

@@ -87,12 +87,3 @@ message Resync {
   string reason = 1;
   int64 from_seq = 2;
 }
-
-message Pong {
-  int64 sent_at_unix_ms = 1;
-}
-
-message Resync {
-  string reason = 1;
-  int64 from_seq = 2;
-}
